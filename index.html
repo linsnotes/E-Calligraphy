@@ -89,6 +89,12 @@
       opacity: 0.9;
     }
 
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
     /* Style for the input field */
     #character-input {
       font-size: 1.2em;
@@ -114,8 +120,10 @@
   <h1 id="page-title">Stroke by Stroke: Unveil the Beauty of Chinese Calligraphy!</h1>
   <input type="text" id="character-input" placeholder="Enter Chinese Character">
   <div id="character-target-div"></div>
-  <button id="animate-button">Animate Character</button>
-  <button id="quiz-button">Start Quiz</button>
+  <div class="button-container">
+      <button id="animate-button">Animate Character</button>
+      <button id="quiz-button">Start Quiz</button>
+  </div>
   <div id="log-messages"></div>
   <footer>
     <p>Built using <a href="https://hanziwriter.org/" target="_blank">HanziWriter</a></p>
