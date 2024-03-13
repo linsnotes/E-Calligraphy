@@ -40,10 +40,47 @@
         margin: 20px auto;
       }
     }
+
+    /* New styles for log messages */
+    .log-error {
+      color: red;
+    }
+
+    .log-success {
+      color: green;
+    }
+
+    .log-info {
+      color: blue;
+    }
+    /* Styles for buttons */
+    #animate-button, #quiz-button {
+      font-size: 1.2em; /* Larger font size */
+      padding: 10px 20px; /* Bigger button */
+      border: none; /* No border */
+      border-radius: 5px; /* Rounded corners */
+      cursor: pointer; /* Cursor changes to pointer on hover */
+      margin: 10px; /* Margin around the buttons */
+    }
+
+    #animate-button {
+      background-color: #4CAF50; /* Green background */
+      color: white; /* White text */
+    }
+
+    #quiz-button {
+      background-color: #2196F3; /* Blue background */
+      color: white; /* White text */
+    }
+
+    /* Additional hover effect for buttons */
+    #animate-button:hover, #quiz-button:hover {
+      opacity: 0.9; /* Slightly transparent on hover */
+    }
   </style>
 </head>
 <body>
-  <h1 id="page-title">Stroke Order of Chinese Character</h1>
+  <h1 id="page-title">Stroke by Stroke: Unveil the Beauty of Chinese Calligraphy!</h1>
   <input type="text" id="character-input" placeholder="Enter Chinese Character">
   <div id="character-target-div"></div>
   <button id="animate-button">Animate Character</button>
@@ -61,13 +98,16 @@
       showOutline: true,
       strokeAnimationSpeed: 2,
       delayBetweenStrokes: 10,
-      radicalColor: '#337ab7'
+      radicalColor: '#FF00FF'
     });
 
-    function displayLog(message) {
+    function displayLog(message, type) {
       var logArea = document.getElementById('log-messages');
       var newMessage = document.createElement('div');
       newMessage.innerHTML = message;
+      newMessage.className = type === 'error' ? 'log-error' : 
+                             type === 'success' ? 'log-success' : 'log-info';
+
       if (logArea.firstChild) {
         logArea.insertBefore(newMessage, logArea.firstChild);
       } else {
@@ -82,20 +122,20 @@
     document.getElementById('quiz-button').addEventListener('click', function() {
       writer.quiz({
         onMistake: function(strokeData) {
-          displayLog('Oh no! you made a mistake on stroke ' + strokeData.strokeNum);
-          displayLog("You've made " + strokeData.mistakesOnStroke + " mistakes on this stroke so far");
-          displayLog("You've made " + strokeData.totalMistakes + " total mistakes on this quiz");
-          displayLog("There are " + strokeData.strokesRemaining + " strokes remaining in this character");
+          displayLog('Oh no! You made a mistake on stroke ' + strokeData.strokeNum, 'error');
+          displayLog("You've made " + strokeData.mistakesOnStroke + " mistakes on this stroke so far", 'info');
+          displayLog("You've made " + strokeData.totalMistakes + " total mistakes on this quiz", 'info');
+          displayLog("There are " + strokeData.strokesRemaining + " strokes remaining in this character", 'info');
         },
         onCorrectStroke: function(strokeData) {
-          displayLog('Yes!!! You got stroke ' + strokeData.strokeNum + ' correct!');
-          displayLog('You made ' + strokeData.mistakesOnStroke + ' mistakes on this stroke');
-          displayLog("You've made " + strokeData.totalMistakes + ' total mistakes on this quiz');
-          displayLog('There are ' + strokeData.strokesRemaining + ' strokes remaining in this character');
+          displayLog('Yes!!! You got stroke ' + strokeData.strokeNum + ' correct!', 'success');
+          displayLog('You made ' + strokeData.mistakesOnStroke + ' mistakes on this stroke', 'info');
+          displayLog("You've made " + strokeData.totalMistakes + ' total mistakes on this quiz', 'info');
+          displayLog('There are ' + strokeData.strokesRemaining + ' strokes remaining in this character', 'info');
         },
         onComplete: function(summaryData) {
-          displayLog('You did it! You finished drawing ' + summaryData.character);
-          displayLog('You made ' + summaryData.totalMistakes + ' total mistakes on this quiz');
+          displayLog('You did it! You finished drawing ' + summaryData.character, 'success');
+          displayLog('You made ' + summaryData.totalMistakes + ' total mistakes on this quiz', 'info');
         }
       });
     });
