@@ -134,6 +134,11 @@
       } else {
         logArea.appendChild(newMessage);
       }
+
+  // Remove older log messages to keep only the latest 4
+      while (logArea.childNodes.length > 4) {
+        logArea.removeChild(logArea.lastChild);
+      }
     }
 
     // Event listener for the animate button
