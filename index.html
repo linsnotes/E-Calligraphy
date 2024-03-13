@@ -41,7 +41,7 @@
       }
     }
 
-    /* New styles for log messages */
+    /* Styles for log messages */
     .log-error {
       color: red;
     }
@@ -53,30 +53,46 @@
     .log-info {
       color: blue;
     }
+
     /* Styles for buttons */
     #animate-button, #quiz-button {
-      font-size: 1.2em; /* Larger font size */
-      padding: 10px 20px; /* Bigger button */
-      border: none; /* No border */
-      border-radius: 5px; /* Rounded corners */
-      cursor: pointer; /* Cursor changes to pointer on hover */
-      margin: 10px; /* Margin around the buttons */
-    }
-
-    #animate-button {
-      background-color: #4CAF50; /* Green background */
-      color: white; /* White text */
+      font-size: 1.2em;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+      background-color: #4CAF50;
+      color: white;
     }
 
     #quiz-button {
-      background-color: #2196F3; /* Blue background */
-      color: white; /* White text */
+      background-color: #2196F3;
     }
 
-    /* Additional hover effect for buttons */
+    /* Hover effect for buttons */
     #animate-button:hover, #quiz-button:hover {
-      opacity: 0.9; /* Slightly transparent on hover */
+      opacity: 0.9;
     }
+
+    /* Style for the input field */
+    #character-input {
+      font-size: 1.2em;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    /* Focus effect for the input field */
+    #character-input:focus {
+      outline: none;
+      border-color: #337ab7;
+      box-shadow: 0 0 5px #337ab7;
+    }
+
   </style>
 </head>
 <body>
@@ -86,10 +102,13 @@
   <button id="animate-button">Animate Character</button>
   <button id="quiz-button">Start Quiz</button>
   <div id="log-messages"></div>
-
+  <footer>
+    <p>Built using <a href="https://hanziwriter.org/" target="_blank">HanziWriter</a></p>
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
 
   <script>
+    // Default character setting
     var defaultCharacter = '华';
     var writer = HanziWriter.create('character-target-div', defaultCharacter, {
       width: 300,
@@ -101,6 +120,7 @@
       radicalColor: '#FF00FF'
     });
 
+    // Function to display log messages
     function displayLog(message, type) {
       var logArea = document.getElementById('log-messages');
       var newMessage = document.createElement('div');
@@ -115,10 +135,12 @@
       }
     }
 
+    // Event listener for the animate button
     document.getElementById('animate-button').addEventListener('click', function() {
       writer.animateCharacter();
     });
 
+    // Event listener for the quiz button
     document.getElementById('quiz-button').addEventListener('click', function() {
       writer.quiz({
         onMistake: function(strokeData) {
@@ -140,6 +162,7 @@
       });
     });
 
+    // Event listener for character input changes
     document.getElementById('character-input').addEventListener('input', function() {
       var inputCharacter = this.value;
       if (inputCharacter) {
