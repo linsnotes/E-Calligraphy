@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E-Calligraphy</title>
+  <style>
+    /* Base styles (mobile-first) */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    #character-target-div {
+      border: 1px solid black;
+      width: 100%;
+      max-width: 300px;
+      height: 300px;
+      margin: 0 auto;
+    }
+
+    #log-messages {
+      margin-top: 20px;
+    }
+
+    /* Styles for tablets and desktop */
+    @media (min-width: 768px) {
+      #character-input {
+        width: 50%;
+      }
+
+      #character-target-div {
+        margin-top: 20px;
+      }
+
+      #log-messages {
+        width: 50%;
+        margin: 20px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="page-title">Stroke Order of Chinese Character</h1>
+  <input type="text" id="character-input" placeholder="Enter Chinese Character">
+  <div id="character-target-div"></div>
+  <button id="animate-button">Animate Character</button>
+  <button id="quiz-button">Start Quiz</button>
+  <div id="log-messages"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+
+  <script>
+    var defaultCharacter = '华';
+    var writer = HanziWriter.create('character-target-div', defaultCharacter, {
+      width: 300,
+      height: 300,
+      padding: 5,
+      showOutline: true,
+      strokeAnimationSpeed: 2,
+      delayBetweenStrokes: 10,
+      radicalColor: '#337ab7'
+    });
+
+    function displayLog(message) {
+      var logArea = document.getElementById('log-messages');
+      var newMessage = document.createElement('div');
+      newMessage.innerHTML = message;
+      if (logArea.firstChild) {
+        logArea.insertBefore(newMessage, logArea.firstChild);
+      } else {
+        logArea.appendChild(newMessage);
+      }
+    }
+
+    document.getElementById('animate-button').addEventListener('click', function() {
+      writer.animateCharacter();
+    });
+
+    document.getElementById('quiz-button').addEventListener('click', function() {
+      writer.quiz({
+        onMistake: function(strokeData) {
+          displayLog('Oh no! you made a mistake on stroke ' + strokeData.strokeNum);
+          displayLog("You've made " + strokeData.mistakesOnStroke + " mistakes on this stroke so far");
+          displayLog("You've made " + strokeData.totalMistakes + " total mistakes on this quiz");
+          displayLog("There are " + strokeData.strokesRemaining + " strokes remaining in this character");
+        },
+        onCorrectStroke: function(strokeData) {
+          displayLog('Yes!!! You got stroke ' + strokeData.strokeNum + ' correct!');
+          displayLog('You made ' + strokeData.mistakesOnStroke + ' mistakes on this stroke');
+          displayLog("You've made " + strokeData.totalMistakes + ' total mistakes on this quiz');
+          displayLog('There are ' + strokeData.strokesRemaining + ' strokes remaining in this character');
+        },
+        onComplete: function(summaryData) {
+          displayLog('You did it! You finished drawing ' + summaryData.character);
+          displayLog('You made ' + summaryData.totalMistakes + ' total mistakes on this quiz');
+        }
+      });
+    });
+
+    document.getElementById('character-input').addEventListener('input', function() {
+      var inputCharacter = this.value;
+      if (inputCharacter) {
+        writer.setCharacter(inputCharacter);
+        document.getElementById('page-title').innerText = "Stroke Order of Chinese Character " + inputCharacter;
+      } else {
+        writer.setCharacter(defaultCharacter);
+        document.getElementById('page-title').innerText = "Stroke Order of Chinese Character " + defaultCharacter;
+      }
+    });
+  </script>
+</body>
+</html>
