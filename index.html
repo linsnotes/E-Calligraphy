@@ -145,13 +145,13 @@
     document.getElementById('quiz-button').addEventListener('click', function() {
       writer.quiz({
         onMistake: function(strokeData) {
-          displayLog('Oh no! You made a mistake on stroke ' + strokeData.strokeNum, 'error');
+          displayLog('Oh no! You made a mistake on stroke ' + (strokeData.strokeNum + 1), 'error');
           displayLog("You've made " + strokeData.mistakesOnStroke + " mistakes on this stroke so far", 'info');
           displayLog("You've made " + strokeData.totalMistakes + " total mistakes on this quiz", 'info');
           displayLog("There are " + strokeData.strokesRemaining + " strokes remaining in this character", 'info');
         },
         onCorrectStroke: function(strokeData) {
-          displayLog('Yes!!! You got stroke ' + strokeData.strokeNum + ' correct!', 'success');
+          displayLog('Yes!!! You got stroke ' + (strokeData.strokeNum + 1) + ' correct!', 'success');
           displayLog('You made ' + strokeData.mistakesOnStroke + ' mistakes on this stroke', 'info');
           displayLog("You've made " + strokeData.totalMistakes + ' total mistakes on this quiz', 'info');
           displayLog('There are ' + strokeData.strokesRemaining + ' strokes remaining in this character', 'info');
