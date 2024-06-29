@@ -25,11 +25,8 @@ To use the Stroke Order Quiz, simply clone the repository and open the `index.ht
 ## Support
 For support, please open an issue in the GitHub repository.
 
-## Author
-[Your Name or Your Organization's Name]
-
 ## Contributing
-Contributions to the Stroke Order Quiz are welcome. Please read the CONTRIBUTING.md file for guidelines on how to contribute.
+Contributions to the Stroke Order Quiz are welcome.
 
 ## Acknowledgements
 Special thanks to [Chanind Thitiwat](https://chanind.github.io/) for creating Hanzi Writer, making the development of this application possible.
